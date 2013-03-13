@@ -1,0 +1,28 @@
+NAME="doxygen"
+VERSION=1.8.3.1
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="Generates documentation from source code"
+DESCRIPTION="Doxygen is the de facto standard tool for generating documentation
+from annotated C++ sources, but it also supports other popular programming
+languages such as C, Objective-C, C#, PHP, Java, Python, IDL, Fortran, VHDL,
+Tcl, and to some extent D."
+HOMEPAGE="http://www.stack.nl/~dimitri/doxygen/"
+SRC_URI="ftp://ftp.stack.nl/pub/users/dimitri/doxygen-${VERSION}.src.tar.gz"
+SRC_DIR="doxygen-${VERSION}"
+
+RESTRICT="debuginfo,diff"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	./configure -platform win32-g++ -prefix /usr -docdir /usr/share/doc/${NAME}
+	# compiling src/language.c with -ggdb results in too many sections error
+	cygmake CC=${CC} CXX=${CXX} AR="${AR} cqs" RANLIB=${RANLIB}
+#		CFLAGS="${CFLAGS}" CXXFLAGS="-fno-exceptions -fno-rtti ${CXXFLAGS}"
+}
+
+src_install() {
+	cd ${B}
+	cyginstall install_docs
+}
