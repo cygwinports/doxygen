@@ -16,7 +16,7 @@ RESTRICT="debuginfo,diff"
 src_compile() {
 	lndirs
 	cd ${B}
-	./configure -platform win32-g++ -prefix /usr -docdir /usr/share/doc/${NAME}
+	./configure -platform linux-g++ -prefix /usr -docdir /usr/share/doc/${NAME}
 	# compiling src/language.c with -ggdb results in too many sections error
 	cygmake CC=${CC} CXX=${CXX} AR="${AR} cqs" RANLIB=${RANLIB}
 #		CFLAGS="${CFLAGS}" CXXFLAGS="-fno-exceptions -fno-rtti ${CXXFLAGS}"
